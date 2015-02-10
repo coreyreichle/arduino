@@ -28,25 +28,40 @@ void setup() {
 /*----------------------------------------------------------------------------*/
 
 void loop() {
-  char keypress, commandBuffer[256];
-  int bufferIndex;
-
+  char keypress;
 
   keypress=getChar();
 
-  commandBuffer[bufferIndex++]= keypress;
+  handleBuffer(keypress);
   
-  Serial.print(keypress);
   printChar( keypress );
 
-  if (bufferIndex > 255) {
-    bufferIndex=0;
-  }
+
   
 }
 
 /*----------------------------------------------------------------------------*/
 
+void interpretBuffer(char buffer[255]);
+
+/*----------------------------------------------------------------------------*/
+
+void handleBuffer(char inKey){
+  static char commandBuffer[255];
+  static int bufferIndex;
+  
+  commandBuffer[bufferIndex++]= inKey;
+  if (bufferIndex > 255) {
+    bufferIndex=0;
+  }
+  if ( inKey == 13 ){
+    interpretBuffer (commandBuffer);
+  }
+
+  return; 
+}
+
+/*----------------------------------------------------------------------------*/
 char getChar() {
   int incomingByte;   // for incoming serial data
   char inChar;       // for casting

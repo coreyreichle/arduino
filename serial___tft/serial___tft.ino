@@ -28,21 +28,13 @@ void setup() {
 /*----------------------------------------------------------------------------*/
 
 void loop() {
-  char keypress, commandBuffer[256];
-  int bufferIndex;
-
+  char keypress;
 
   keypress=getChar();
 
-  commandBuffer[bufferIndex++]= keypress;
-  
   Serial.print(keypress);
   printChar( keypress );
 
-  if (bufferIndex > 255) {
-    bufferIndex=0;
-  }
-  
 }
 
 /*----------------------------------------------------------------------------*/
@@ -72,7 +64,7 @@ static void printChar(char prChar) {
     return;
   }
   else {
-  Tft.drawChar(prChar, xPos,yPos,1,YELLOW);
+    Tft.drawChar(prChar, xPos,yPos,1,YELLOW);
   }
   if (xPos>220){
     xPos=-10;
@@ -86,3 +78,4 @@ static void printChar(char prChar) {
   xPos=xPos + 10;
   return;
 }
+
