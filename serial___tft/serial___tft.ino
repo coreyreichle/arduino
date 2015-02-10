@@ -49,9 +49,9 @@ char keypress, commandBuffer[256];
 int bufferIndex;
 
 
-keypress=getChar();i
+keypress=getChar();
 
-commandBuffer[bufferIndex]= keypress.to_string;
+commandBuffer[bufferIndex]= keypress;
 
 printChar( keypress );
 
