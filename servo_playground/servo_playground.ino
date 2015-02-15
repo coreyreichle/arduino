@@ -31,9 +31,8 @@ void loop()
   char pos;
   pos = getChar();
   if (pos != '\0'){
-    Serial.write(pos);
     positionServo(pos);
-//    beep(stepPin);
+    //beep(stepPin);
   }
   delay(500);
 }
@@ -48,6 +47,9 @@ void beep (int stepPin)
 
 /*----------------------------------------------------------------------------*/
 void positionServo( char command ){
+  Serial.write("Executing:");
+  Serial.write(command);
+  Serial.write('\n');
   switch (command) {
   case '1':
     //do something when var equals 1
@@ -108,6 +110,9 @@ void positionServo( char command ){
     myservo.write(x);
     delay(10);
     }
+    break;
+  case 'b':
+    beep(13);
     break;
   default: 
     myservo.write(5);
