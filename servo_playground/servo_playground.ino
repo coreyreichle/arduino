@@ -34,14 +34,14 @@ void loop()
     positionServo(pos);
     //beep(stepPin);
   }
-  delay(500);
+  delay(100);
 }
 
 /*----------------------------------------------------------------------------*/
 void beep (int stepPin)
 {
   digitalWrite(stepPin, HIGH);
-  delay(50);
+  delay(10);
   digitalWrite(stepPin, LOW);
 }
 
@@ -115,7 +115,7 @@ void positionServo( char command ){
     beep(13);
     break;
   default: 
-    myservo.write(5);
+    myservo.write(4);
     // if nothing else matches, do the default
     // default is optional
   }
