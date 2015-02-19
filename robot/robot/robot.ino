@@ -23,10 +23,10 @@ long pingDistance;
 
 
 void setup() {
- // initialize motors
+  // initialize motors
   Serial.begin(10420);                     //tell the Arduino to communicate with Make: it PCB
-    delay(500);                              //delay 500ms
-   semiAuto.all_stop();               //all motors stop
+  delay(500);                              //delay 500ms
+  semiAuto.all_stop();               //all motors stop
 
     // initialize sensor
   fwdSensor.attach(servoPin);  // attaches the servo on pin 9 to the servo object
@@ -36,41 +36,41 @@ void setup() {
 void loop () {
   long distances[3];
 
-//Drive forwards, until we hit prox alarm
-  while (pingCenter() > 1000){
-   semiAuto.go_forward(100);  
+  //Drive forwards, until we hit prox alarm
+  while (pingCenter() > 1500){
+    semiAuto.go_forward(100);  
   }
   //Stop, and backup a bit.
   semiAuto.all_stop();
   delay(100);
   semiAuto.go_backward(100);
-  delay(400);
+  delay(1000);
   semiAuto.all_stop();
-  
+
   //Scan
   distances[0] = pingLeft();
 
   distances[2] = pingRight();
 
   // decide which way
-// if left is better...
-  if ( distances[0] > distances[2] ) {
-   semiAuto.turn_left(100);
-   delay(400);
-   semiAuto.all_stop();
-  }
-  else if (distances[2] > distances[0] ) {
-    semiAuto.turn_right(100);
-    delay(400);
+  // if left is better...
+  if ( distances[0] > ( distances[2] + 200 ) ) {
+    semiAuto.turn_left(100);
+    delay(500);
     semiAuto.all_stop();
   }
-  else {
-   semiAuto.turn_right(100);
-  delay(1000);
-   semiAuto.all_stop(); 
+  // else, go right...
+  else if (distances[2] > ( distances[0] + 200 ) ) {
+    semiAuto.turn_right(100);
+    delay(500);
+    semiAuto.all_stop();
   }
-
-  // execute turn if needed else move forward
+  // if both suck, turn around.
+  else {
+    semiAuto.turn_right(100);
+    delay(1200);
+    semiAuto.all_stop(); 
+  }
 
 }
 
@@ -137,6 +137,7 @@ long microsecondsToCentimeters(long microseconds)
   // object we take half of the distance travelled.
   return microseconds / 29 / 2;
 }
+
 
 
 
