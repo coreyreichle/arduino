@@ -201,7 +201,7 @@ void stateMachine()
         Tft.fillScreen();
         Tft.drawString("calling...", 20, 100, 3, WHITE);
         Tft.fillRectangle(10, 200, 230, 50, GRAY1);
-        Tft.drawString("HANDUP", 20, 215, 3, RED);
+        Tft.drawString("HANGUP", 20, 215, 3, RED);
         while(1)
         {
             if(UI.getTouchRect(10, 200, 240, 250))// hand up
@@ -236,7 +236,7 @@ void stateMachine()
 
         Tft.drawString("calling...", 20, 100, 3, BLACK);
         Tft.fillRectangle(10, 200, 230, 50, BLACK);
-        Tft.drawString("HANDUP", 20, 215, 3, BLACK);
+        Tft.drawString("HANGUP", 20, 215, 3, BLACK);
 
         break;
         //***************************************get call*************************
@@ -247,7 +247,7 @@ void stateMachine()
         Tft.fillRectangle(10, 200, 100, 50, GRAY1);
         Tft.fillRectangle(130, 200, 100, 50, GRAY1);
         Tft.drawString("ACCEPT", 15, 215, 2, GREEN);
-        Tft.drawString("HANDUP", 135, 215, 2, RED);
+        Tft.drawString("HANGUP", 135, 215, 2, RED);
         while(1)
         {
             // serial get data
