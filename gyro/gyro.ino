@@ -1,4 +1,5 @@
 #include <Wire.h>
+#include <LiquidCrystal.h>
 
 #define CTRL_REG1 0x20
 #define CTRL_REG2 0x21
@@ -8,21 +9,34 @@
 int Addr = 105;                 // I2C address of gyro
 int x, y, z;
 
+int ledPin = 8;
+
+LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2);
+int backLight = 13;    // pin 13 will control the backlight
+
 void setup(){
   Wire.begin();
-  Serial.begin(9600);
+  lcd.begin(16,2);              // columns, rows.  use 16,2 for a 16x2 LCD, etc.
+  pinMode(ledPin, OUTPUT);
   writeI2C(CTRL_REG1, 0x1F);    // Turn on all axes, disable power down
   writeI2C(CTRL_REG3, 0x08);    // Enable control ready signal
-  writeI2C(CTRL_REG4, 0x80);    // Set scale (500 deg/sec)
-  delay(100);                   // Wait to synchronize 
+  writeI2C(CTRL_REG4, 0x100);    // Set scale (500 deg/sec)
+  delay(100);                   // Wait to synchronize
 }
 
 void loop(){
+  digitalWrite(ledPin, LOW);
+  lcd.clear();                  // start with a blank screen
+  lcd.setCursor(0,0); 
   getGyroValues();              // Get new values
+
   // In following Dividing by 114 reduces noise
-  Serial.print("Raw X:");  Serial.print(x / 114);  
-  Serial.print(" Raw Y:"); Serial.print(y / 114);
-  Serial.print(" Raw Z:"); Serial.println(z / 114);
+  lcd.print(x );
+  lcd.setCursor(7,0);
+  lcd.print(y );
+  lcd.setCursor(14,0);
+  lcd.print(z );
+  analogWrite(ledPin, x + y + z);
   delay(500);                   // Short delay between reads
 }
 
